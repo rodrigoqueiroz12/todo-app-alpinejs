@@ -96,7 +96,7 @@
           >
             <template x-if="tasks.length === 0">
               <div class="flex flex-col items-center py-[64px] px-[24px] gap-4">
-                <img src="/src/img/task.svg" class="select-none" />
+                <img id="task-image" class="select-none" />
                 <div class="flex flex-col">
                   <span
                     class="text-gray-300 font-bold text-lg text-center cursor-default select-none"
@@ -126,7 +126,7 @@
                     }"
                   />
                   <label :for="task.id">
-                    <img src="/src/img/checked.svg" />
+                    <img id="checked-image" />
                   </label>
                 </div>
                 <div class="description flex-1">

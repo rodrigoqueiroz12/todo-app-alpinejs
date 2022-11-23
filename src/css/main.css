@@ -45,6 +45,7 @@
   }
 
   .task .checker label img {
+    content: url("../img/checked.svg");
     @apply w-3;
   }
 
@@ -71,4 +72,8 @@
   .create-button {
     @apply flex items-center justify-center gap-2 p-4 text-gray-100 text-md font-bold bg-blue-dark rounded-lg hover:bg-blue transition-colors;
   }
+}
+
+#task-image {
+  content: url("../img/task.svg");
 }
