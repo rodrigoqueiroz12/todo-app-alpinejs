@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToDo App</title>
-  </head>
-  <body>
-    <div
-      id="app"
-      class="relative w-full min-h-screen flex items-center flex-col bg-gray-600 overflow-hidden pb-4"
-    >
-      <header
-        class="h-[175px] w-full flex justify-center items-center bg-gray-700"
-      >
-        <a href="/">
-          <img src="/src/img/logo.svg" class="select-none" />
-        </a>
-      </header>
-      <main
-        class="w-full sm:w-full md:w-[740px] px-4"
-        x-data="{
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToDo App</title>
+</head>
+
+<body>
+  <div id="app" class="relative w-full min-h-screen flex items-center flex-col bg-gray-600 overflow-hidden pb-4">
+    <header class="h-[175px] w-full flex justify-center items-center bg-gray-700">
+      <a href="/">
+        <img src="/src/img/logo.svg" class="select-none" />
+      </a>
+    </header>
+    <main class="w-full sm:w-full md:w-[740px] px-4" x-data="{
           tasks: $persist([]),
           finished: 0
-        }"
-        x-init="$nextTick(() => {
+        }" x-init="$nextTick(() => {
           let finisheds = 0;
 
           for (task of tasks) {
@@ -32,11 +26,8 @@
           }
 
           finished = finisheds;
-        })"
-      >
-        <form
-          class="flex gap-2 translate-y-[-50%]"
-          @submit.prevent="() => {
+        })">
+      <form class="flex gap-2 translate-y-[-50%]" @submit.prevent="() => {
             const taskId = (performance.now().toString(36)+Math.random().toString(36)).replace(/\./g,'');
             
             if ($event.target.task.value.trim() !== '') {
@@ -48,35 +39,23 @@
 
               $event.target.task.value = '';
             }
-          }"
-        >
-          <input
-            type="text"
-            class="input flex-1"
-            name="task"
-            placeholder="Adicione uma nova tarefa"
-            autocomplete="off"
-          />
-          <button class="create-button" type="submit">
-            Criar
-            <img src="/src/img/plus.svg" />
-          </button>
-        </form>
-        <div class="flex flex-col gap-6 mt-6">
-          <div class="flex justify-between items-center">
-            <span class="flex text-blue text-md font-bold gap-2 cursor-default">
-              Tarefas criadas
-              <span
-                x-text="tasks.length"
-                class="flex justify-center items-center bg-gray-400 rounded-full px-2 text-gray-200 cursor-default select-none"
-              ></span>
-            </span>
-            <span
-              class="flex text-purple text-md font-bold gap-2 cursor-default"
-            >
-              Concluídas
-              <span
-                x-init="$watch('tasks', tasks => {
+          }">
+        <input type="text" class="input flex-1" name="task" placeholder="Adicione uma nova tarefa" autocomplete="off" />
+        <button class="create-button" type="submit">
+          Criar
+          <img src="/src/img/plus.svg" />
+        </button>
+      </form>
+      <div class="flex flex-col gap-6 mt-6">
+        <div class="flex justify-between items-center">
+          <span class="flex text-blue text-md font-bold gap-2 cursor-default">
+            Tarefas criadas
+            <span x-text="tasks.length"
+              class="flex justify-center items-center bg-gray-400 rounded-full px-2 text-gray-200 cursor-default select-none"></span>
+          </span>
+          <span class="flex text-purple text-md font-bold gap-2 cursor-default">
+            Concluídas
+            <span x-init="$watch('tasks', tasks => {
                   let finisheds = 0;
         
                   for (task of tasks) {
@@ -84,91 +63,59 @@
                   }
         
                   finished = finisheds;
-                })"
-                x-text="`${finished} de ${tasks.length}`"
-                class="flex justify-center items-center bg-gray-400 rounded-full px-2 text-gray-200 cursor-default select-none"
-              ></span>
-            </span>
-          </div>
-          <div
-            id="tasks-container"
-            class="flex flex-col border-solid border-t border-t-gray-400 rounded-lg gap-3"
-          >
-            <template x-if="tasks.length === 0">
-              <div class="flex flex-col items-center py-[64px] px-[24px] gap-4">
-                <img id="task-image" class="select-none" />
-                <div class="flex flex-col">
-                  <span
-                    class="text-gray-300 font-bold text-lg text-center cursor-default select-none"
-                  >
-                    Você ainda não tem tarefas cadastradas
-                  </span>
-                  <span
-                    class="text-gray-300 text-lg text-center cursor-default select-none"
-                  >
-                    Crie tarefas e organize seus itens a fazer
-                  </span>
-                </div>
+                })" x-text="`${finished} de ${tasks.length}`"
+              class="flex justify-center items-center bg-gray-400 rounded-full px-2 text-gray-200 cursor-default select-none"></span>
+          </span>
+        </div>
+        <div id="tasks-container" class="flex flex-col border-solid border-t border-t-gray-400 rounded-lg gap-3">
+          <template x-if="tasks.length === 0">
+            <div class="flex flex-col items-center py-[64px] px-[24px] gap-4">
+              <img id="task-image" class="select-none" />
+              <div class="flex flex-col">
+                <span class="text-gray-300 font-bold text-lg text-center cursor-default select-none">
+                  Você ainda não tem tarefas cadastradas
+                </span>
+                <span class="text-gray-300 text-lg text-center cursor-default select-none">
+                  Crie tarefas e organize seus itens a fazer
+                </span>
               </div>
-            </template>
-            <template x-for="task in tasks" :key="task.id">
-              <div
-                class="task flex justify-between"
-                :class="task.finish ? 'checked' : ''"
-              >
-                <div class="checker">
-                  <input
-                    type="checkbox"
-                    :id="task.id"
-                    :checked="task.finish"
-                    @change="() => {
+            </div>
+          </template>
+          <template x-for="task in tasks" :key="task.id">
+            <div class="task flex justify-between" :class="task.finish ? 'checked' : ''">
+              <div class="checker">
+                <input type="checkbox" :id="task.id" :checked="task.finish" @change="() => {
                       task.finish = !task.finish
-                    }"
-                  />
-                  <label :for="task.id">
-                    <img id="checked-image" />
-                  </label>
-                </div>
-                <div class="description flex-1">
-                  <p x-text="task.description"></p>
-                </div>
-                <div class="action">
-                  <button
-                    class="delete-button"
-                    @click="() => {
+                    }" />
+                <label :for="task.id">
+                  <img id="checked-image" />
+                </label>
+              </div>
+              <div class="description flex-1">
+                <p x-text="task.description"></p>
+              </div>
+              <div class="action">
+                <button class="delete-button" @click="() => {
                       const taskIndex = tasks.indexOf(task);
 
                       if (taskIndex > -1) tasks.splice(taskIndex, 1); 
-                    }"
-                  >
-                    <svg
-                      width="13"
-                      height="14"
-                      viewBox="0 0 13 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8.20214 4.98547H6.87158V10.5073H8.20214V4.98547Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M5.46239 4.98547H4.13184V10.5073H5.46239V4.98547Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M12.478 2.16712C12.4754 2.03061 12.4295 1.89846 12.3469 1.78975C12.2642 1.68104 12.1492 1.6014 12.0184 1.56232C11.9596 1.53782 11.8974 1.52252 11.8339 1.51696H8.28678C8.1525 1.07791 7.88082 0.693554 7.51174 0.420471C7.14265 0.147388 6.69564 0 6.23651 0C5.77738 0 5.33038 0.147388 4.96129 0.420471C4.5922 0.693554 4.32053 1.07791 4.18625 1.51696H0.639107C0.580679 1.51814 0.522686 1.52729 0.46674 1.54418H0.45162C0.313182 1.58701 0.193338 1.67547 0.11163 1.79515C0.0299214 1.91483 -0.00883041 2.05866 0.00169348 2.20319C0.0122174 2.34771 0.071396 2.48441 0.169579 2.59099C0.267763 2.69757 0.399158 2.76774 0.542339 2.79006L1.25298 12.5334C1.26382 12.9127 1.41693 13.2741 1.68191 13.5458C1.94688 13.8175 2.30435 13.9797 2.68332 14H9.78668C10.1662 13.9804 10.5244 13.8186 10.79 13.5468C11.0556 13.2751 11.2092 12.9132 11.22 12.5334L11.9277 2.79914C12.0802 2.77797 12.22 2.70232 12.3212 2.58615C12.4223 2.46999 12.478 2.32116 12.478 2.16712ZM6.23651 1.21456C6.3661 1.21458 6.49427 1.24146 6.61294 1.29351C6.73161 1.34556 6.8382 1.42164 6.92598 1.51696H5.54704C5.63459 1.42135 5.74114 1.34507 5.85986 1.29299C5.97859 1.24092 6.10687 1.21421 6.23651 1.21456ZM9.78668 12.7904H2.68332C2.60168 12.7904 2.47467 12.6573 2.45955 12.4457L1.75798 2.81123H10.715L10.0135 12.4457C9.99836 12.6573 9.87135 12.7904 9.78668 12.7904Z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                    }">
+                  <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.20214 4.98547H6.87158V10.5073H8.20214V4.98547Z" fill="currentColor" />
+                    <path d="M5.46239 4.98547H4.13184V10.5073H5.46239V4.98547Z" fill="currentColor" />
+                    <path
+                      d="M12.478 2.16712C12.4754 2.03061 12.4295 1.89846 12.3469 1.78975C12.2642 1.68104 12.1492 1.6014 12.0184 1.56232C11.9596 1.53782 11.8974 1.52252 11.8339 1.51696H8.28678C8.1525 1.07791 7.88082 0.693554 7.51174 0.420471C7.14265 0.147388 6.69564 0 6.23651 0C5.77738 0 5.33038 0.147388 4.96129 0.420471C4.5922 0.693554 4.32053 1.07791 4.18625 1.51696H0.639107C0.580679 1.51814 0.522686 1.52729 0.46674 1.54418H0.45162C0.313182 1.58701 0.193338 1.67547 0.11163 1.79515C0.0299214 1.91483 -0.00883041 2.05866 0.00169348 2.20319C0.0122174 2.34771 0.071396 2.48441 0.169579 2.59099C0.267763 2.69757 0.399158 2.76774 0.542339 2.79006L1.25298 12.5334C1.26382 12.9127 1.41693 13.2741 1.68191 13.5458C1.94688 13.8175 2.30435 13.9797 2.68332 14H9.78668C10.1662 13.9804 10.5244 13.8186 10.79 13.5468C11.0556 13.2751 11.2092 12.9132 11.22 12.5334L11.9277 2.79914C12.0802 2.77797 12.22 2.70232 12.3212 2.58615C12.4223 2.46999 12.478 2.32116 12.478 2.16712ZM6.23651 1.21456C6.3661 1.21458 6.49427 1.24146 6.61294 1.29351C6.73161 1.34556 6.8382 1.42164 6.92598 1.51696H5.54704C5.63459 1.42135 5.74114 1.34507 5.85986 1.29299C5.97859 1.24092 6.10687 1.21421 6.23651 1.21456ZM9.78668 12.7904H2.68332C2.60168 12.7904 2.47467 12.6573 2.45955 12.4457L1.75798 2.81123H10.715L10.0135 12.4457C9.99836 12.6573 9.87135 12.7904 9.78668 12.7904Z"
+                      fill="currentColor" />
+                  </svg>
+                </button>
               </div>
-            </template>
-          </div>
+            </div>
+          </template>
         </div>
-      </main>
-    </div>
-    <script type="module" src="/main.js"></script>
-  </body>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>

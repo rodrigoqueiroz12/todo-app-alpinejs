@@ -1,11 +1,9 @@
-import "./src/css/main.css";
+import "./src/css/main.css"
 
-import Alpine from 'alpinejs'
-import persist from '@alpinejs/persist'
+import Alpine from "alpinejs"
+import persist from "@alpinejs/persist"
 
 window.Alpine = Alpine
- 
+
 Alpine.plugin(persist)
 Alpine.start()
-
- 
